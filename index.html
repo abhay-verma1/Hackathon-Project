@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisis Compass</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #fullcnt {
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        #fullcnt.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .main {
+            background-image: url("./main_img.webp");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            min-height: 600px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #incidents {
+            height: auto;
+            padding-bottom: 50px;
+        }
+
+        #titl {
+            position: absolute;
+            top: 30%;
+            font-size: 3rem;
+            font-weight: bolder;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            width: 90%;
+        }
+
+        #slogan {
+            position: absolute;
+            font-size: 2rem;
+            top: 40%;
+            font-weight: lighter;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            width: 90%;
+        }
+
+        #des {
+            position: absolute;
+            width: 90%;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50%;
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        #slogan2 {
+            position: absolute;
+            font-weight: lighter;
+            top: 60%;
+            font-weight: lighter;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            width: 90%;
+            font-size: 1.5rem;
+        }
+
+        .go-to {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.527);
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        #btn {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 50px 20px;
+            flex-wrap: wrap;
+        }
+
+        #disaster {
+            padding-top: 80px;
+            padding-bottom: 50px;
+        }
+
+        .box {
+            width: 300px;
+            height: 250px;
+            box-shadow: 0px 0px 20px 5px black;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            .box {
+                width: 250px;
+                height: 200px;
+            }
+        }
+
+        .box:hover {
+            transform: scale(1.1);
+        }
+
+        .box:hover .images {
+            filter: brightness(50%);
+        }
+
+        .changes {
+            transform: scale(1.1);
+        }
+
+        .changes .images {
+            filter: brightness(50%);
+        }
+
+        .changes .dname {
+            opacity: 1;
+        }
+
+        .images {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: filter 0.2s ease-in-out;
+        }
+
+        .dname {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2rem;
+            padding: 1rem;
+            border-radius: 10px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+        }
+
+        .box:hover .dname {
+            opacity: 1;
+        }
+
+        .custom-carousel {
+            margin-top: 40px;
+            height: auto;
+            max-height: 500px;
+        }
+
+        .custom-carousel .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .heading {
+            display: block;
+            width: 90%;
+            max-width: 850px;
+            border-bottom: 2px solid black;
+            padding-bottom: 9px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 2rem;
+            padding-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .heading {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* FOOTER */
+        .footer {
+            background-color: #fff;
+            height: auto;
+        }
+
+        .contact {
+            background-color: #aef7ff;
+            height: auto;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 30px;
+            justify-content: space-around;
+            align-items: flex-start;
+            font-family: Montserrat, sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+        }
+
+        /* LEFT SIDE(ADRESS,MOBILE) */
+        .contact-1 {
+            color: #000;
+            margin: 20px;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-1>h2 {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .contact-1>h3 {
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .contact-1>p {
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        .contact-1>h2:hover,
+        .contact-1>p:hover {
+            color: #727272;
+            cursor: pointer;
+        }
+
+        /* MIDDLE PART(GOOGLE MAP) */
+        iframe {
+            height: 300px;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px;
+        }
+
+        /* RIGHT SIDE(CONTACT CARD) */
+        .contact-2 {
+            background-color: rgba(0, 0, 0, 0);
+            padding: 10px;
+            border-radius: 10px;
+            height: auto;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px;
+        }
+
+        /* FORM */
+        .touch {
+            color: #000;
+            margin-bottom: 10px;
+            font-size: 20px;
+            text-align: start;
+        }
+
+        .form-group {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-family: Montserrat, sans-serif;
+            font-optical-sizing: auto;
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        input[type="email"],
+        input[type="text"],
+        textarea {
+            background-color: rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 30px;
+            padding: 10px;
+            border: 2px solid #000;
+            border-radius: 3px;
+            font-family: Montserrat, sans-serif;
+            font-optical-sizing: auto;
+            font-size: 12px;
+            color: #000;
+        }
+
+        textarea {
+            height: 60px;
+        }
+
+        input[type="email"]:focus,
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: 0;
+            border-color: #3d3d3d;
+            font-size: 12px;
+            font-family: Montserrat, sans-serif;
+            font-optical-sizing: auto;
+        }
+
+        .send {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border: 2px solid #000;
+            color: #000;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .send>p {
+            font-family: Montserrat, sans-serif;
+            font-optical-sizing: auto;
+            font-size: 15px;
+            font-weight: 500;
+            color: #000;
+        }
+
+        .send:focus {
+            background-color: #686868;
+        }
+
+        /* LAST PART */
+        .last {
+            height: auto;
+            background-color: #000;
+            padding: 30px;
+            padding-top: 30px;
+        }
+
+        /* SOCIAL MEDIA HANDLES */
+        .last-1 {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo-c {
+            height: 40px;
+            width: 40px;
+            margin: 5px;
+            fill: #a3a3a3;
+            transition: fill 0.4s ease;
+            transition: stroke 0.4s ease;
+        }
+
+        .logo-c:hover {
+            fill: #fff;
+            stroke: #fff;
+            cursor: pointer;
+        }
+
+        /* COPYRIGHT */
+        .copyright {
+            text-align: center;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        /* Navbar adjustments */
+        .navbar {
+            padding: 10px 15px;
+        }
+
+        .navbar-brand img {
+            width: 80px;
+            height: auto;
+        }
+
+        @media (max-width: 992px) {
+            #titl {
+                font-size: 2rem;
+                top: 25%;
+            }
+            
+            #slogan {
+                font-size: 1.5rem;
+                top: 35%;
+            }
+            
+            #des {
+                font-size: 1rem;
+                top: 45%;
+            }
+            
+            #slogan2 {
+                font-size: 1.2rem;
+                top: 55%;
+            }
+            
+            #btn {
+                top: 65%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #titl {
+                font-size: 1.5rem;
+                top: 20%;
+            }
+            
+            #slogan {
+                font-size: 1.2rem;
+                top: 30%;
+            }
+            
+            #des {
+                font-size: 0.9rem;
+                top: 40%;
+            }
+            
+            #slogan2 {
+                font-size: 1rem;
+                top: 50%;
+            }
+            
+            #btn {
+                top: 60%;
+            }
+            
+            .custom-carousel .carousel-item img {
+                height: 250px;
+            }
+            
+            .navbar-brand img {
+                width: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <div class="spinner-grow" role="status"></div>
+        <p>Loading...</p>
+    </div>
+    
+    <div id="fullcnt">
+        <div class="main">
+            <nav class="navbar fixed-top navbar-expand-lg bg-light">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarScroll">
+                        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+                            style="--bs-scroll-height: 100px;">
+                            <li class="nav-item">
+                                <a class="navbar-brand" href="#">
+                                    <img src="logo.webp" alt="Logo" width="100" height="50"
+                                        class="d-inline-block align-text-center">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="emergency.html">Service</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="latestnews.html">News</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="volunteer.html">
+                                    Volunteer
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active">Alert Zones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">About Us</a>
+                            </li>
+                        </ul>
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <input id="disS" class="form-control me-2" placeholder="Search" aria-label="Search">
+                            <button id="searchbtn" class="btn btn-outline-success">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+            <div id="cnt">
+                <p id="titl">Crisis Compass</p>
+                <p id="slogan"></p>
+                <p id="des">Crisis Compass is your go-to hub for real-time disaster alerts, safety tips, and
+                    emergency resources. Stay informed, stay prepared — navigate any crisis with confidence.
+                </p>
+                <p id="slogan2">In Every Emergency, We're Your Compass.</p>
+                <p id="btn">
+                    <a href="#disaster"><button class="go-to">GO</button></a>
+                </p>
+            </div>
+        </div>
+
+        <div id="disaster">
+            <h1 class="heading">When Nature Strikes: Learn, React, Survive</h1>
+            <div id="info">
+                <a class="box" id="earthquake" href="https://en.wikipedia.org/wiki/Earthquake">
+                    <img class="images" src="earthquake.webp" alt="">
+                    <p class="dname">Earthquake</p>
+                </a>
+                <a class="box" id="volcanic-eruption" href="https://en.wikipedia.org/wiki/Volcanic_eruption">
+                    <img class="images" src="erruption.webp" alt="">
+                    <p class="dname">Volcanic Eruption</p>
+                </a>
+                <a class="box" id="tsunami" href="https://en.wikipedia.org/wiki/Tsunami">
+                    <img class="images" src="tsunami.webp" alt="">
+                    <p class="dname">Tsunami</p>
+                </a>
+                <a class="box" id="landslide" href="https://en.wikipedia.org/wiki/Landslide">
+                    <img class="images" src="landslide.webp" alt="">
+                    <p class="dname">Landslide</p>
+                </a>
+                <a class="box" id="avalanche" href="https://en.wikipedia.org/wiki/Avalanche">
+                    <img class="images" src="avalanche.webp" alt="">
+                    <p class="dname">Avalanche</p>
+                </a>
+                <a class="box" id="flood" href="https://en.wikipedia.org/wiki/Flood">
+                    <img class="images" src="flood.webp" alt="">
+                    <p class="dname">Flood</p>
+                </a>
+                <a class="box" id="cyclone" href="https://en.wikipedia.org/wiki/Cyclone">
+                    <img class="images" src="cyclon.webp" alt="">
+                    <p class="dname">Cyclone</p>
+                </a>
+                <a class="box" id="tornado" href="https://en.wikipedia.org/wiki/Tornado">
+                    <img class="images" src="tornado.webp" alt="">
+                    <p class="dname">Tornado</p>
+                </a>
+                <a class="box" id="drought" href="https://en.wikipedia.org/wiki/Drought">
+                    <img class="images" src="drought.webp" alt="">
+                    <p class="dname">Drought</p>
+                </a>
+                <a class="box" id="Hailstrom" href="https://en.wikipedia.org/wiki/Hail">
+                    <img class="images" src="hailstorm.webp" alt="">
+                    <p class="dname">Hailstorm</p>
+                </a>
+                <a class="box" id="heatwave" href="https://en.wikipedia.org/wiki/Heat_wave">
+                    <img class="images" src="heatstorm.webp" alt="">
+                    <p class="dname">Heatwave</p>
+                </a>
+                <a class="box" id="nuclearD" href="https://en.wikipedia.org/wiki/Nuclear_accident">
+                    <img class="images" src="nuclearD.webp" alt="">
+                    <p class="dname">Nuclear Disaster</p>
+                </a>
+            </div>
+        </div>
+
+        <div id="incidents">
+            <h1 class="heading">Infernos & Aftermath: The World's Darkest Hours</h1>
+            <div id="carouselExampleCaptions" class="carousel slide custom-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
+                        aria-label="Slide 4"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="2000">
+                        <img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2024/02/21140213/landslide-philippines-2.jpg"
+                            class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Philippines Rocked by Catastrophic Landslide</h5>
+                            <p> On 6 February 2024, a landslide triggered by heavy rainfall occured in Maco
+                                Municipality in Davao de Oro Province, Mindanao Island, southern Philippines,
+                                resulting in casualties and damage.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="https://www.deccanchronicle.com/h-upload/2024/07/13/1823670-new.webp"
+                            class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Flood in Assam</h5>
+                            <p>Over 109 lives have been lost due to storms, landslides, and floods, affecting 30 out
+                                of 33 districts in Assam across the 3 waves of floods since May</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/2025_Myanmar_earthquake_damage_in_Mandalay_%282%29.png"
+                            class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Deadly earthquake strikes Myanmar</h5>
+                            <p>On 28 March 2025 at 12:50:54 MMT (06:20:54 UTC), a Mw 7.7 earthquake struck the
+                                Sagaing Region of Myanmar</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="img3.webp" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Fire Breakout in California</h5>
+                            <p>From January 7 to 31, 2025, a series of 14 destructive wildfires affected the Los
+                                Angeles metropolitan area and San Diego County in California, United States.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <!-- CONTACT -->
+            <section class="contact" id="contact-id">
+                <div class="contact-1">
+                    <h2>CRISIS COMPASS</h2>
+                    <h3>TEL:</h3>
+                    <p class="c">1 (800) 555-7890</p>
+                    <h3>EMAIL:</h3>
+                    <p class="c">contact@crisiscompass.com</p>
+                    <h3>ADDRESS:</h3>
+                    <p class="c">
+                        The Emerald Heights,<br />
+                        Suite 1003, Crystal Tower,<br />
+                        Boulevard Street, Uptown District,<br />
+                        New Avalon City,<br />
+                        State of Lumora, 90210<br />
+                        Planetopia<br />
+                    </p>
+                </div>
+
+                <!-- GET IN TOUCH -->
+                <div class="contact-2" id="get-in-touch-id">
+                    <form>
+                        <h2 class="touch">GET IN TOUCH</h2>
+                        <div class="form-group">
+                            <label for="name">NAME:</label>
+                            <input type="text" id="name" name="name" autocomplete="off" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">EMAIL:</label>
+                            <input type="email" id="email" name="email" autocomplete="off" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">SUBJECT:</label>
+                            <input type="text" id="subject" name="subject" autocomplete="off" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">MESSAGE:</label>
+                            <textarea id="message" name="message" rows="5" required autocomplete="off"></textarea>
+                        </div>
+
+                        <button type="submit" class="send">
+                            <p>Send Message</p>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- LAST -->
+            <div class="last">
+                <!-- SOCIAL MEDIA HANDLES -->
+                <div class="last-1">
+                    <div class="logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 98 98" class="logo-c">
+                            <path
+                                d="M48 .5C21.8.5.5 21.8.5 48S21.8 95.5 48 95.5 95.5 74.2 95.5 48 74.2.5 48 .5zm11.8 49.2h-7.7v27.5H40.6V49.7h-5.4V40h5.4v-6.3c0-4.5 2.1-11.6 11.6-11.6h8.5v9.4h-6.2c-1 0-2.4.5-2.4 2.7v5.7h8.7l-1 9.8z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 98 98" class="logo-c">
+                            <path d="M58.7145 66.4634L48.4787 52.2823L51.9131 48.6281L64.7865 66.4634H58.7145Z">
+                            </path>
+                            <path d="M39.4752 31.396L49.0656 44.6831L45.6362 48.3442L33.4032 31.396H39.4752Z">
+                            </path>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M49 96.5C75.2335 96.5 96.5 75.2335 96.5 49C96.5 22.7665 75.2335 1.5 49 1.5C22.7665 1.5 1.5 22.7665 1.5 49C1.5 75.2335 22.7665 96.5 49 96.5ZM56.2341 71.3042L45.1181 55.8582L30.601 71.3046H24.1289L42.2851 51.9217L24.1297 26.6943L41.9755 26.6948L52.3388 41.1888L65.9154 26.695L72.5268 26.6948L55.1758 45.1565L73.8715 71.3042H56.2341Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 102 102" class="logo-c">
+                            <path
+                                d="M50 59a8.96 8.96 0 0 0 7.3-14.2 8.9 8.9 0 0 0-14.6 0A8.96 8.96 0 0 0 50 59zm19.7-20v-8.7H61V39z">
+                            </path>
+                            <path
+                                d="M50 5C25.2 5 5 25.2 5 50s20.2 45 45 45 45-20.2 45-45S74.8 5 50 5zm25.6 39.8v20.9c0 5.4-4.4 9.9-9.9 9.9H34.3c-5.4 0-9.9-4.4-9.9-9.9V34.3c0-5.4 4.4-9.9 9.9-9.9h31.4c5.4 0 9.9 4.4 9.9 9.9v10.5z">
+                            </path>
+                            <path
+                                d="M64.1 50c0 7.7-6.2 14-14 14a13.98 13.98 0 0 1-13-19.2h-7.6v20.9c0 2.7 2.2 4.9 4.9 4.9h31.4c2.7 0 4.9-2.2 4.9-4.9V44.8H63c.7 1.5 1.1 3.4 1.1 5.2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 102 102" class="logo-c">
+                            <path d="M43.6 57.7c5.3-2.7 10.5-5.4 15.7-8.2-5.3-2.8-10.5-5.5-15.7-8.2v16.4z"></path>
+                            <path
+                                d="M50 2.5C23.8 2.5 2.5 23.8 2.5 50S23.8 97.5 50 97.5 97.5 76.2 97.5 50 76.2 2.5 50 2.5zm23.9 59.2c-.6 2.6-2.8 4.6-5.4 4.9-6.1.7-12.4.7-18.5.7-6.2 0-12.4 0-18.5-.7-2.6-.3-4.7-2.2-5.4-4.9-.9-3.8-.9-7.8-.9-11.7s0-8 .9-11.7c.6-2.6 2.8-4.6 5.4-4.9 6.1-.7 12.4-.7 18.5-.7 6.2 0 12.4 0 18.5.7 2.6.3 4.7 2.2 5.4 4.9.9 3.8.9 7.8.9 11.7s0 8-.9 11.7z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 102 102" class="logo-c">
+                            <path
+                                d="M50 2.5C23.8 2.5 2.5 23.8 2.5 50S23.8 97.5 50 97.5 97.5 76.2 97.5 50 76.2 2.5 50 2.5zm4.9 58.1c-2.9 0-5.7-1.6-6.7-3.4l-1.9 7.5c-1.2 4.3-4.7 8.6-4.9 8.9-.2.2-.6.2-.7-.2-.1-.6-1-6 .1-10.4.5-2.2 3.5-14.9 3.5-14.9s-.9-1.7-.9-4.3c0-4 2.3-7.1 5.3-7.1 2.5 0 3.7 1.9 3.7 4.1 0 2.5-1.6 6.2-2.4 9.7-.7 2.9 1.4 5.3 4.3 5.3 5.2 0 8.6-6.6 8.6-14.5 0-6-4-10.5-11.3-10.5-8.3 0-13.4 6.2-13.4 13.1 0 2.4.7 4.1 1.8 5.3.5.6.6.8.4 1.5-.1.5-.4 1.7-.6 2.2-.2.7-.7.9-1.4.7-3.8-1.5-5.6-5.7-5.6-10.4 0-7.7 6.5-17 19.5-17 10.4 0 17.3 7.5 17.3 15.6 0 10.8-5.9 18.8-14.7 18.8z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 102 102" class="logo-c">
+                            <path
+                                d="M50 2.5C23.8 2.5 2.5 23.8 2.5 50S23.8 97.5 50 97.5 97.5 76.2 97.5 50 76.2 2.5 50 2.5zm-7.8 63.9h-8.6V36.3h8.6v30.1zm-4-32c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm34.1 32h-8.6V47.8c0-2.2-.6-3.7-3.3-3.7-4.4 0-5.3 3.7-5.3 3.7v18.6h-8.6V36.3h8.6v2.9c1.2-.9 4.3-2.9 8.6-2.9 2.8 0 8.6 1.7 8.6 11.7v18.4z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- COPYRIGHT -->
+                <div class="copyright">
+                    <p>
+                        &copy; 2025 <strong>Crisis Compass</strong>. All rights reserved.
+                    </p>
+                    <p>
+                        Designed and developed with care. Unauthorized use or duplication
+                        is prohibited.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const content = document.getElementById('fullcnt');
+
+            loader.style.display = 'none';
+            content.classList.add('show');
+        });
+
+
+        const text = "Find Your Way in Crisis";
+        let speed = 100;
+        let index = 0;
+
+        function typeEffect() {
+            if (index < text.length) {
+                document.getElementById("slogan").textContent += text.charAt(index);
+               
+                        index++;
+                        setTimeout(typeEffect, speed);
+                    }
+                    else {
+                        setTimeout(() => {
+                            document.getElementById("slogan").textContent = "";
+                            index = 0;
+                            typeEffect();
+                        }, 2000);
+                    }
+                }
+
+                typeEffect();
+
+
+                let search = () => {
+                    let query = searchBox.value.toLowerCase();
+                    let boxes = document.querySelectorAll(".box");
+
+                    boxes.forEach(box => {
+                        let name = box.querySelector(".dname").textContent.toLowerCase();
+                        if (name.includes(query)) {
+                            box.scrollIntoView(
+                                {
+                                    behavior: "smooth",
+                                    block: "center"
+
+                                });
+                            box.style.boxShadow = "0px 0px 20px 5px green";
+                            box.classList.add("changes");
+                        }
+                        else {
+                            box.style.boxShadow = "0px 0px 20px 5px black";
+                            box.classList.remove("changes");
+                        }
+                    });
+                }
+
+                let searchBox = document.getElementById("disS");
+                searchBox.addEventListener("keyup", function (event) {
+                    if (event.key === "Enter") {
+                        //event.preventDefault();
+                        search();
+                    }
+                });
+                let btn = document.getElementById("searchbtn");
+                btn.addEventListener("click", search);
+
+
+
+
+            </script>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+                crossorigin="anonymous">
+                </script>
+
+
+</body>
+
+</html>

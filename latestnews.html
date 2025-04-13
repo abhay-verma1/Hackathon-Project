@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latest News - Disaster Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 3rem;
+      background: url('https://tse4.mm.bing.net/th?id=OIP.7giPwpVlgmQY_avJPqkILwHaEy&pid=Api&P=0&h=180') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -2;
+    }
+
+    h1 {
+      text-align: center;
+      color: #03163f;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+     font-weight: 1200;
+    }
+
+    .news-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      max-width: 1000px;
+      margin: 4rem auto;
+    }
+
+    @media (min-width: 768px) {
+      .news-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .news-card:hover {
+      transform: scale(1.1);
+      box-shadow: 0 16px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .news-card {
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .news-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .news-content {
+      padding: 1rem;
+    }
+
+    .news-content h2 {
+      font-size: 1.25rem;
+      color: #111827;
+      margin: 0 0 0.5rem;
+    }
+
+    .news-content p {
+      color: #374151;
+    }
+  </style>
+</head>
+<body>
+  <h1>Latest News</h1>
+  <div class="news-container" id="newsContainer">
+    <!-- News cards will be added here -->
+  </div>
+
+  <script>
+    const news = [
+      {
+        title: "Cyclone Mocha Hits Coastal Areas",
+        image: "https://d18x2uyjeekruj.cloudfront.net/wp-content/uploads/2020/06/cyclo.jpg",
+        description: "Cyclone Mocha made landfall this morning causing flooding and strong winds in coastal cities. Evacuation and relief operations are underway."
+      },
+      {
+        title: "Earthquake Tremors Felt in Kuchh,Gujrat",
+        image: "https://tse4.mm.bing.net/th?id=OIP.1Ja6uCfLH-4Ql6cii8noiAHaEK&pid=Api&P=0&h=180",
+        description: "Mild earthquake tremors were experienced in northern areas, with no major damage reported. Authorities advise staying cautious."
+      },
+      {
+        title: "Flood Relief Camps Set Up",
+        image: "https://www.india.com/wp-content/uploads/2020/07/Assam-flood.jpg",
+        description: "Multiple relief camps have been established in flood-affected regions, offering food, shelter, and medical aid to displaced families."
+      },
+      {
+        title: "Heatwave Warning Issued",
+        image: "https://images.indianexpress.com/2022/03/PTI03_24_2022_000154B-1.jpg",
+        description: "Meteorological departments issue a red alert for the coming week due to soaring temperatures. Residents advised to stay hydrated."
+      }
+    ];
+
+    const container = document.getElementById('newsContainer');
+
+    news.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'news-card';
+      card.innerHTML = `
+        <img src="${item.image}" alt="${item.title}">
+        <div class="news-content">
+          <h2>${item.title}</h2>
+          <p>${item.description}</p>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>

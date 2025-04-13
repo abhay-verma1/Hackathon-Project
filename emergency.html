@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disaster Management Services</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f4f8;
+      color: #333;
+    }.slider {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  background: linear-gradient(90deg, #004e92, #000428);
+  padding: 40px 0;
+}
+
+.card-container {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.card {
+  min-width: 300px;
+  margin: 0 15px;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  font-size: 1.1em;
+  color: #004e92;
+  font-weight: 600;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.emergency-section {
+  padding: 60px 20px;
+  background: #ffffff;
+}
+
+.emergency-section h1{
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2em;
+  color: #000428;
+}
+
+.emergency-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.emergency-card {
+  width: 220px;
+  background: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.emergency-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.emergency-card img {
+  width: 190px;
+  height: 190px;
+  margin-bottom: 15px;
+}
+
+.emergency-card h4 {
+  margin-bottom: 10px;
+  color: #d32f2f;
+}
+
+.emergency-card p {
+  margin: 5px 0;
+  font-size: 0.95em;
+}
+
+  </style>
+</head>
+<body>  <div class="slider">
+    <div class="card-container" id="sliderTrack">
+      <div class="card">Rescue Operations</div>
+      <div class="card">Medical Assistance</div>
+      <div class="card">Food & Shelter</div>
+      <div class="card">Evacuation Plans</div>
+      <div class="card">Disaster Counseling</div>
+    </div>
+  </div>  <section class="emergency-section">
+    <h1>Emergency Services</h1>
+    <div class="emergency-cards">
+      <div class="emergency-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqum4RxO3YqFt2lGmR5OL5wwPyUjRsE-77Sw&s" alt="Fire Dept">
+        <h4>Fire Department</h4>
+        <p>Helpline: 101</p>
+        <p>Nearest Branch: Main Street Station</p>
+      </div>
+      <div class="emergency-card">
+        <img src="https://w0.peakpx.com/wallpaper/850/390/HD-wallpaper-indian-police-service-ips-logo.jpg" alt="Police">
+        <h4>Police</h4>
+        <p>Helpline: 100</p>
+        <p>Nearest Branch: Central Police HQ</p>
+      </div>
+      <div class="emergency-card">
+        <img src="https://img.freepik.com/premium-vector/medical-emergency-ambulance-logo-templates_706143-1109.jpg?w=2000" alt="Ambulance">
+        <h4>Emergency Medical Service</h4>
+        <p>Helpline: 102</p>
+        <p>Nearest Branch: City Hospital</p>
+      </div>
+      <div class="emergency-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL8Ig-PIfG0EvklIQQbPBUjnp-sUZwaF_4kA&s" alt="NDRF">
+        <h4>NDRF</h4>
+        <p>Helpline: 108</p>
+        <p>Nearest Branch: Regional HQ</p>
+      </div>
+      <div class="emergency-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL8Ig-PIfG0EvklIQQbPBUjnp-sUZwaF_4kA&s" alt="NDRF">
+        <h4>NDRF</h4>
+        <p>Helpline: 108</p>
+        <p>Nearest Branch: Regional HQ</p>
+      </div>
+      <div class="emergency-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Crest_of_The_Salvation_Army.png" alt="Salvation Army">
+        <h4>Salvation Army</h4>
+        <p>Helpline: 108</p>
+        <p>Nearest Branch: Regional HQ</p>
+      </div>
+      <div class="emergency-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrPfcF6qcS76rQkrWQuBbaROYGAfp1WFwB7V3kAktwkkmAL_L6KPULGCZN6zLBUpSw7nU&usqp=CAU" alt="Dog Rescue Orginazation">
+        <h4>Dog Rescue Orginazation</h4>
+        <p>Helpline: 108</p>
+        <p>Nearest Branch: Regional HQ</p>
+      </div>
+      <div class="emergency-card">
+        <img src="https://www.peacockride.com/cdn/shop/files/I1Asset49_2b9b15c6-979e-4abb-8d1d-a92f2c6a167a_grande.jpg?v=1709985369" alt="NDRF">
+        <h4>Red Cross Army</h4>
+        <p>Helpline: 108</p>
+        <p>Nearest Branch: Regional HQ</p>
+      </div>
+    </div>
+  </section>  <script>
+    const track = document.getElementById('sliderTrack');
+    let scrollAmount = 0;
+
+    function autoScroll() {
+      scrollAmount += 330; // card width + margin
+      if (scrollAmount >= track.scrollWidth) {
+        scrollAmount = 0;
+      }
+      track.style.transform = translateX(-${scrollAmount}px);
+    }
+
+    setInterval(autoScroll, 2000);
+  </script></body>
+</html>
